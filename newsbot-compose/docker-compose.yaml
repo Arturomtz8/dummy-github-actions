@@ -1,0 +1,26 @@
+services:
+  newsbot:
+    build: .
+    depends_on:
+      - mysql
+    restart: on-failure
+    env_file:
+      - token.env
+    networks:
+      - newsbot
+
+  mysql:
+    image: mysql:8
+    volumes:
+      - newsbot-db:/var/lib/mysql
+    env_file:
+      - mysql.env
+    networks:
+      - newsbot
+
+volumes:
+  newsbot-db:
+networks:
+  newsbot:
+    # name: newsbot-net
+    
